@@ -1,0 +1,409 @@
+create table Marca (
+    id_marca NUMBER (10,0) PRIMARY KEY,
+    Nombre VARCHAR(50) not null
+);
+create table Categoria (
+    id_categoria NUMBER (10,0) PRIMARY KEY,
+    Nombre VARCHAR(100) not null
+);
+create table Proveedor (
+    id_proveedor NUMBER (10,0) PRIMARY KEY,
+    Nombre VARCHAR(250) not null,
+    Direccion VARCHAR(250) not null,
+    Telefono VARCHAR(8) not null
+);
+CREATE table Lotes(
+    id_lotes NUMBER(10,0) PRIMARY KEY,
+    Nombre VARCHAR (100) not null
+);
+create table TipoCompra(
+    id_tipoCompra NUMBER(10,0) PRIMARY KEY,
+    Nombre VARCHAR(100) not null
+);
+create table TipoUsuario(
+    id_tipoUsuario NUMBER(10,0) PRIMARY KEY,
+    Tipo VARCHAR (100) not null
+);
+create table TipoVenta(
+    id_tipoVenta NUMBER(10,0) PRIMARY KEY,
+    TipoVenta VARCHAR(100) not null,
+    Estado Varchar(2) not null
+);
+create table Cliente(
+    id_cliente NUMBER(10,0) PRIMARY KEY,
+    Nombre VARCHAR (50) null,
+    Apelido Varchar(50) null,
+    Telefono Varchar (8) null,
+    Direccion varchar (250) null
+);
+create table UnidadDeMedida(
+    id_unidadDeMedida NUMBER(10,0) PRIMARY KEY,
+    Medida VARCHAR (100) not null
+);
+create table Usuario(
+    id_usuario NUMBER(10,0) PRIMARY KEY,
+    Nombre varchar(100) not null,
+    Apellido varchar(100) not null,
+    Telefono varchar (8) not null,
+    UserName varchar (25) not null,
+    Clave varchar (250) not null,
+    id_TipoUsuario NUMBER(10,0) NOT NULL
+                     CONSTRAINT fk_foranea REFERENCES TIPOUSUARIO
+                     (ID_TIPOUSUARIO)
+);
+create table Compra(
+    id_compra NUMBER(10,0) not null PRIMARY KEY,
+    id_proveedor NUMBER(10,0) not null
+            CONSTRAINT fk_proveedor REFERENCES PROVEEDOR(id_proveedor),
+    id_usuario NUMBER(10,0) not null
+            CONSTRAINT fk_usuario REFERENCES  USUARIO(id_usuario),
+    id_tipoCompra NUMBER(10,0) not null
+            CONSTRAINT fk_tipoCompra REFERENCES TIPOCOMPRA(id_tipoCompra),
+    FechaCompra DATE not null,
+    Total NUMBER(10,2) not null
+);
+create table Venta(
+    id_venta NUMBER(10,0) not null PRIMARY KEY,
+    id_cliente NUMBER(10,0) not null
+        CONSTRAINT fk_cliente REFERENCES CLIENTE (id_cliente),
+    Fecha DATE,
+    id_usuario NUMBER(10,0) not null
+        CONSTRAINT fk_usuarioventa REFERENCES USUARIO (id_usuario),
+    id_tipoVenta NUMBER(10,0) not null
+        CONSTRAINT fk_tipoVenta REFERENCES TIPOVENTA (id_tipoVenta),
+    total Number(10,2) not null
+);
+create table Producto (
+    id_producto NUMBER(10,0) not null PRIMARY KEY,
+    Nombre VARCHAR(100) not null,
+    descripcion VARCHAR(250) not null,
+    id_marca NUMBER(10,0) not null
+        CONSTRAINT fk_marcaProd REFERENCES MARCA (id_marca),
+    id_categoria NUMBER(10,0) not null
+        CONSTRAINT fk_categoriaProd REFERENCES CATEGORIA (id_categoria),
+    PrecioVenta NUMBER (10,2) not null,
+    FechaIngreso DATE not null,
+    Costo NUMBER (10,2) not null,
+    Stock NUMBER(10,2) not null,
+    id_lotes NUMBER(10,0) not null
+        CONSTRAINT fk_loteProd REFERENCES LOTES (id_lotes),
+    id_unidaDeMedida NUMBER(10,0) not null
+        CONSTRAINT fk_unidadProd REFERENCES UNIDADDEMEDIDA (id_unidadDeMedida)
+);
+create table DetalleVenta(
+    id_detalleVenta NUMBER(10,0) not null PRIMARY KEY,
+    id_venta NUMBER(10,0) not null
+        CONSTRAINT fk_ventaDet REFERENCES VENTA (id_venta),
+    id_producto NUMBER(10,0) not null
+        CONSTRAINT fk_productoVent REFERENCES PRODUCTO (id_producto),
+    Cantidad NUMBER(10,2) not null,
+    subtotal Number(10,2) not null
+);
+create table DetalleCompra(
+    id_detalleCompra NUMBER(10,0) not null PRIMARY KEY,
+    id_compra NUMBER (10,0) not null
+        CONSTRAINT fk_compraDet REFERENCES COMPRA (id_compra),
+    id_producto NUMBER (10,0) not null
+        CONSTRAINT fk_productoCompr REFERENCES PRODUCTO (id_producto),
+    PrecioCompra NUMBER(10,2) not null,
+    Cantidad NUMBER(10,0) not null,
+    PrecioVenta NUMBER(10,2) not null,
+    Subtotal NUMBER(10,2) not null    
+);
+
+--------------Auto incrementar Id de todas las tablas ------------------------------------
+
+----------------Incrementar id Cliente ----------------------------
+CREATE SEQUENCE Secuencia_Cliente_autoid
+INCREMENT BY 1
+START WITH 1
+NOMINVALUE
+NOMAXVALUE;
+
+CREATE OR REPLACE TRIGGER Trigger_Cliente_autoid
+BEFORE INSERT ON Cliente
+REFERENCING NEW AS NEW FOR EACH ROW
+DECLARE valorSecuenciaCliente NUMBER := 0;
+BEGIN
+SELECT Secuencia_Cliente_autoid.NEXTVAL INTO valorSecuenciaCliente FROM DUAL;
+:NEW.id_cliente := valorSecuenciaCliente;
+END;
+
+--insert into cliente VALUES (1,'Pedro', 'Perez', '77887788','Santa Ana, El Salvador');
+--SELECT * from cliente;
+
+--drop SEQUENCE Secuencia_Usuario;
+--drop TRIGGER Trigger_Usuario_Id;
+
+-------------------------Incrementar id Categoria-------------------------
+create sequence idautoCategoria
+start with 1
+increment by 1  -- aqui lo hago es que determino apartir de que nuevo voy
+                -- a iniciar y cuando va incrementar
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Categoria
+before insert on Categoria
+for each row
+begin
+  select idautoCategoria.nextval into :new.id_categoria from dual;
+end;
+
+INSERT INTO categoria VALUES (1,'Clavos');
+select * from categoria;
+
+--------------------- Incrementar id Compra -----------------------------
+create sequence idautoCompra
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Compra
+before insert on Compra
+for each row
+begin
+  select idautoCompra.nextval into :new.id_compra from dual;
+end;
+
+--------------------- Incrementar id Detallecompra -----------------------------
+create sequence idautoDetalleCompra
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_DetalleCompra
+before insert on DetalleCompra
+for each row
+begin
+  select idautoDetalleCompra.nextval into :new.id_detalleCompra from dual;
+end;
+
+--------------------- Incrementar id DetalleVenta -----------------------------
+create sequence idautoDetalleVenta
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_DetalleVenta
+before insert on DetalleVenta
+for each row
+begin
+  select idautoDetalleVenta.nextval into :new.id_detalleVenta from dual;
+end;
+
+--------------------- Incrementar id Lotes -----------------------------
+create sequence idautoLotes
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Lotes
+before insert on Lotes
+for each row
+begin
+  select idautoLotes.nextval into :new.id_lotes from dual;
+end;
+
+--------------------- Incrementar id Marca -----------------------------
+create sequence idautoMarca
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Marca
+before insert on Marca
+for each row
+begin
+  select idautoMarca.nextval into :new.id_marca from dual;
+end;
+
+--------------------- Incrementar id Producto -----------------------------
+create sequence idautoProducto
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Producto
+before insert on Producto
+for each row
+begin
+  select idautoProducto.nextval into :new.id_producto from dual;
+end;
+
+--------------------- Incrementar id Proveedor -----------------------------
+create sequence idautoProveedor
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Proveedor
+before insert on Proveedor
+for each row
+begin
+  select idautoProveedor.nextval into :new.id_Proveedor from dual;
+end;
+
+--------------------- Incrementar id TipoCompra -----------------------------
+create sequence idautoTipoCompra
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_TipoCompra
+before insert on TipoCompra
+for each row
+begin
+  select idautoTipoCompra.nextval into :new.id_tipoCompra from dual;
+end;
+
+--------------------- Incrementar id TipoUsuario -----------------------------
+create sequence idautoTipoUsuario
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_TipoUsuario
+before insert on TipoUsuario
+for each row
+begin
+  select idautoTipoUsuario.nextval into :new.id_tipoUsuario from dual;
+end;
+
+--------------------- Incrementar id TipoVenta -----------------------------
+create sequence idautoTipoVenta
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_TipoVenta
+before insert on TipoVenta
+for each row
+begin
+  select idautoTipoVenta.nextval into :new.id_tipoVenta from dual;
+end;
+
+--------------------- Incrementar id UnidadDeMedida -----------------------------
+create sequence idautoUnidadMedida
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_UnidadMedida
+before insert on UnidadDeMedida
+for each row
+begin
+  select idautoUnidadMedida.nextval into :new.id_unidadDeMedida from dual;
+end;
+
+--------------------- Incrementar id Usuario -----------------------------
+create sequence idautoUsuario
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Usuario
+before insert on Usuario
+for each row
+begin
+  select idautoUsuario.nextval into :new.id_usuario from dual;
+end;
+
+--------------------- Incrementar id Venta -----------------------------
+create sequence idautoVenta
+start with 1
+increment by 1
+order;
+
+-- Creacion de trigger
+create or replace trigger Trigger_id_auto_Venta
+before insert on Venta
+for each row
+begin
+  select idautoVenta.nextval into :new.id_venta from dual;
+end;
+
+
+------------------------ Vista -----------------------------------------
+--Para los productos
+create view productosConDetalle as Select pr.id_producto, pr.nombre, pr.descripcion, pr.id_marca, m.nombre as marca, pr.id_categoria,
+    cat.nombre as categoria, pr.precioventa, pr.fechaingreso, pr.costo, pr.stock, pr.id_lotes, l.nombre as lote, pr.id_unidademedida, un.medida 
+from Producto pr 
+join categoria cat on pr.id_categoria = cat.id_categoria 
+join marca m on pr.id_marca = m.id_marca 
+join lotes l on pr.id_lotes = l.id_lotes 
+join unidaddemedida un on pr.id_unidademedida = un.id_unidaddemedida;
+
+
+select * from productosConDetalle;
+
+
+--para los usuarios
+create view usuariosConDetalle as select u.id_usuario, u.nombre as usuario, u.apellido,(u.nombre || ' ' || u.apellido) as Nombre, u.telefono, u.username, u.clave, u.id_tipousuario,tp.tipo from usuario u
+join tipousuario tp on u.id_tipousuario = tp.id_tipousuario;
+
+select * from usuariosConDetalle;
+
+
+///Esto no!!!!!!!
+///Posicion del panel celeste: [x=240,y=50]        Heinght: 680 Width: 1140
+
+----------------------- Compra y detalle de compra modificado ---------------------
+DROP TABLE DetalleCompra;
+Drop Table Compra;
+
+create table Compra(
+    id_compra NUMBER(10,0) not null PRIMARY KEY,
+    id_proveedor NUMBER(10,0) not null
+            CONSTRAINT fk_proveedor REFERENCES PROVEEDOR(id_proveedor),
+    id_usuario NUMBER(10,0) not null
+            CONSTRAINT fk_usuario REFERENCES  USUARIO(id_usuario),
+    id_tipoCompra NUMBER(10,0) not null
+            CONSTRAINT fk_tipoCompra REFERENCES TIPOCOMPRA(id_tipoCompra),
+    FechaCompra DATE not null,
+    Total NUMBER(10,2) not null
+);
+create table DetalleCompra(
+    id_detalleCompra NUMBER(10,0) not null PRIMARY KEY,
+    id_compra NUMBER (10,0) not null
+        CONSTRAINT fk_compraDet REFERENCES COMPRA (id_compra),
+    id_producto NUMBER (10,0) not null
+        CONSTRAINT fk_productoCompr REFERENCES PRODUCTO (id_producto),
+    PrecioCompra NUMBER(10,2) not null,
+    Cantidad NUMBER(10,0) not null,
+    PrecioVenta NUMBER(10,2) not null,
+    Subtotal NUMBER(10,2) not null    
+);
+-----------Venta y detalle venta
+create table Venta(
+    id_venta NUMBER(10,0) not null PRIMARY KEY,
+    id_cliente NUMBER(10,0) not null
+        CONSTRAINT fk_cliente REFERENCES CLIENTE (id_cliente),
+    Fecha DATE,
+    id_usuario NUMBER(10,0) not null
+        CONSTRAINT fk_usuarioventa REFERENCES USUARIO (id_usuario),
+    id_tipoVenta NUMBER(10,0) not null
+        CONSTRAINT fk_tipoVenta REFERENCES TIPOVENTA (id_tipoVenta),
+    total Number(10,2) not null
+);
+create table DetalleVenta(
+    id_detalleVenta NUMBER(10,0) not null PRIMARY KEY,
+    id_venta NUMBER(10,0) not null
+        CONSTRAINT fk_ventaDet REFERENCES VENTA (id_venta),
+    id_producto NUMBER(10,0) not null
+        CONSTRAINT fk_productoVent REFERENCES PRODUCTO (id_producto),
+    Cantidad NUMBER(10,2) not null,
+    subtotal Number(10,2) not null
+);
