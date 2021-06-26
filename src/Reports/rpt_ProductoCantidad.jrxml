@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fed42bf1-59d5-4e86-9bb4-bc5e9a2f6349">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="valor" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select pro.id_producto, pro.nombre as Producto, pro.descripcion, mar.nombre as Marca,prov.nombre as Proveedor
+, cat.nombre as Categoria, pro.precioventa 
+,pro.fechaingreso, pro.costo, pro.stock, lot.nombre as Lote, uni.medida from producto pro
+inner join marca mar on mar.id_marca=pro.id_marca
+inner join categoria cat on cat.id_categoria=pro.id_categoria
+inner join lotes lot on lot.id_lotes=lot.id_lotes
+inner join proveedor prov on prov.id_proveedor=pro.id_producto
+inner join unidaddemedida uni on uni.id_unidaddemedida=pro.id_unidademedida
+where pro.stock like '%$P!{valor}%']]>
+	</queryString>
+	<field name="ID_PRODUCTO" class="java.math.BigDecimal"/>
+	<field name="PRODUCTO" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="MARCA" class="java.lang.String"/>
+	<field name="PROVEEDOR" class="java.lang.String"/>
+	<field name="CATEGORIA" class="java.lang.String"/>
+	<field name="PRECIOVENTA" class="java.math.BigDecimal"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="COSTO" class="java.math.BigDecimal"/>
+	<field name="STOCK" class="java.math.BigDecimal"/>
+	<field name="LOTE" class="java.lang.String"/>
+	<field name="MEDIDA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="59" width="406" height="29" uuid="c9b967f8-d492-4ccc-bc65-7b404985c82d"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reporte por Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="0" width="406" height="59" uuid="d3c5a754-6751-4499-bd44-f80c374ebe92"/>
+				<textElement verticalAlignment="Middle">
+					<font size="34" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Productos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="426" y="0" width="129" height="37" uuid="7dbe4a42-d1af-48c9-b8e8-3b58ffbac618"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="0" width="156" height="39" uuid="eacc1ff8-e6b3-4a4d-aa55-c727dcc7100c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ferreteria Jerusalen]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement x="20" y="1" width="535" height="1" uuid="99580a94-75d5-408b-b8e1-865a24ba5022"/>
+			</line>
+			<staticText>
+				<reportElement x="20" y="2" width="81" height="20" uuid="d062b103-0498-4a03-8947-c93847fde559"/>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="2" width="90" height="20" uuid="fb7e5064-5ffe-44f7-a4c5-9a5fce7d71cb"/>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="2" width="61" height="20" uuid="03537980-6683-48bb-a985-d9ca14188020"/>
+				<text><![CDATA[MARCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="252" y="2" width="70" height="20" uuid="1b4fdf36-6794-440f-850b-0900e9c09d98"/>
+				<text><![CDATA[PROVEEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="2" width="46" height="20" uuid="91c93297-914a-4d34-b24f-5c4dccd8b672"/>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="2" width="58" height="20" uuid="25fed448-720d-42c8-8b58-0b746a19610f"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="2" width="43" height="20" uuid="3671e2e6-76da-41c8-a8dc-cb56a7eefcc5"/>
+				<text><![CDATA[STOCK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="2" width="86" height="20" uuid="22a09d9d-04a5-4851-a366-8576c5358104"/>
+				<text><![CDATA[LOTE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement x="20" y="1" width="535" height="1" uuid="abeefcbb-189c-46a4-ac50-fcf4ed507b7e"/>
+			</line>
+			<textField>
+				<reportElement x="20" y="2" width="81" height="20" uuid="0a626c86-5549-4234-a111-e49674c6be0e"/>
+				<textFieldExpression><![CDATA[$F{PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="2" width="90" height="20" uuid="402f284a-11f7-4b20-8eac-c62ea7778210"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="191" y="2" width="61" height="20" uuid="b4926a4c-cd28-4ce6-8e8d-58fccd30c856"/>
+				<textFieldExpression><![CDATA[$F{MARCA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="252" y="2" width="70" height="20" uuid="9e29c876-ce7d-46b6-b889-367caf4ca5bc"/>
+				<textFieldExpression><![CDATA[$F{PROVEEDOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="2" width="46" height="20" uuid="43c19edb-23fb-4eef-ad90-8f5c1dc27732"/>
+				<textFieldExpression><![CDATA[$F{PRECIOVENTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="2" width="58" height="20" uuid="21c66761-1b56-43f8-96a8-d79856c2cc8a"/>
+				<textFieldExpression><![CDATA[$F{FECHAINGRESO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="426" y="2" width="43" height="20" uuid="6a01d149-34b8-43bd-ac6e-f79d9fb75580"/>
+				<textFieldExpression><![CDATA[$F{STOCK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="2" width="86" height="20" uuid="6bd000ad-5201-4b51-ba5c-399247b8381e"/>
+				<textFieldExpression><![CDATA[$F{LOTE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="213" y="8" width="80" height="20" uuid="ec9eaaf2-09d8-4247-81d5-9dacded427c6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="293" y="8" width="40" height="20" uuid="635818e5-d28f-47f8-ba0a-b01c8c812658"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

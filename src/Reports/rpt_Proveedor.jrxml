@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1dcc20ea-22fa-428e-a971-b5c729ddfa56">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select id_proveedor, nombre, direccion, telefono from proveedor]]>
+	</queryString>
+	<field name="ID_PROVEEDOR" class="java.math.BigDecimal"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="TELEFONO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="22" y="0" width="406" height="59" uuid="ab45b450-526a-4005-bc82-ee7f141a1ed8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="34" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Productos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="59" width="406" height="29" uuid="14c61b8f-3b6a-45ad-a950-3cfcd918da71"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reporte por Proveedor en General]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="426" y="0" width="129" height="37" uuid="18fb36b4-7bba-4a7c-96bb-2b1528d34a01"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="0" width="156" height="39" uuid="272b8dfe-e895-41dd-adaa-e9a60253e140"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ferreteria Jerusalen]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement x="22" y="1" width="533" height="1" uuid="4e9f25b2-21da-4c9c-8a54-042d72a0ea8d"/>
+			</line>
+			<staticText>
+				<reportElement x="37" y="2" width="100" height="20" uuid="56a39d8c-9ded-420e-aedb-75481a8a8681"/>
+				<text><![CDATA[ID_PROVEEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="2" width="100" height="20" uuid="420da56a-732c-4eac-bf3a-30b7158269b1"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="2" width="100" height="20" uuid="e7992982-fde1-454d-ae2c-bd58096b4999"/>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="2" width="100" height="20" uuid="b02d2899-f430-4e25-838d-de6058b88e6b"/>
+				<text><![CDATA[TELEFONO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement x="22" y="1" width="533" height="1" uuid="998283d0-325f-4110-8e33-0cf6d195fbc4"/>
+			</line>
+			<textField>
+				<reportElement x="37" y="2" width="100" height="20" uuid="27834e78-4754-4b5d-9231-4bf9bd862d81"/>
+				<textFieldExpression><![CDATA[$F{ID_PROVEEDOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="2" width="100" height="20" uuid="41076be6-38a9-45c8-a550-0729574e34ff"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="2" width="100" height="20" uuid="00f067b1-61ae-4550-8827-d9f016fcf84a"/>
+				<textFieldExpression><![CDATA[$F{DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="2" width="100" height="20" uuid="c81260aa-a52c-4adb-9a3f-da3be1964fff"/>
+				<textFieldExpression><![CDATA[$F{TELEFONO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="209" y="8" width="80" height="20" uuid="ca5694fb-e066-483a-9fe6-f90627962832"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="289" y="8" width="40" height="20" uuid="1b34fe56-8abe-4585-b299-d80c7bb6492b"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

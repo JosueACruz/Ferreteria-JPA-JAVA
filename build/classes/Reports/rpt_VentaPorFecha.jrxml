@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="129e72ef-c918-4fd3-bc99-8c55f9bd038b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ven.id_venta,(clie.nombre || '' || clie.apelido) as Cliente, ven.fecha, usu.nombre, tipv.tipoventa, ven.total from venta ven
+inner join cliente clie on clie.id_cliente=ven.id_cliente
+inner join usuario usu on usu.id_usuario=ven.id_usuario
+inner join tipoventa tipv on tipv.id_tipoventa=ven.id_tipoventa
+where ven.fecha like '%$P!{fecha}%']]>
+	</queryString>
+	<field name="ID_VENTA" class="java.math.BigDecimal"/>
+	<field name="CLIENTE" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="TIPOVENTA" class="java.lang.String"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="0" width="406" height="59" uuid="82d0f46c-74e7-4886-9418-22eb8d01e790"/>
+				<textElement verticalAlignment="Middle">
+					<font size="34" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Ventas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="59" width="406" height="29" uuid="15ae67dd-9237-41b9-8032-5c0b42a431ec"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Ventas por Fecha]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="426" y="2" width="129" height="37" uuid="8241103b-eeff-40de-9890-c0028a6f234f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="0" width="156" height="39" uuid="af5db329-f5a8-42cc-8cba-7224927f443b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ferreteria Jerusalen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="12" width="42" height="20" uuid="bc1a9588-f745-44cd-b120-5e4595f9ddc6"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="248" y="12" width="100" height="20" uuid="c3f03b59-ba7f-45f5-bb89-03b19d816e6e"/>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement x="30" y="1" width="525" height="1" uuid="51b2d375-7fc2-4b76-837f-b2eeac02cdc2"/>
+			</line>
+			<staticText>
+				<reportElement x="30" y="2" width="100" height="20" uuid="c231412e-cb92-44e5-83e9-f8b1e3c02e50"/>
+				<text><![CDATA[ID_VENTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="2" width="100" height="20" uuid="c6abb2d0-ae5e-40b2-a298-e3d909564e1e"/>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="2" width="118" height="20" uuid="aae2cf65-a997-4a9e-9257-4dfeae353764"/>
+				<text><![CDATA[VENDEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="2" width="106" height="20" uuid="bee1c7c6-2a7a-4de3-a8dd-002a17dfde8e"/>
+				<text><![CDATA[TIPOVENTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="2" width="100" height="20" uuid="9720db35-3e54-4a41-9204-1dd41b819a6e"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement x="30" y="1" width="525" height="1" uuid="9fb6b499-5751-45d2-943b-c52f28682d4e"/>
+			</line>
+			<textField>
+				<reportElement x="30" y="2" width="100" height="20" uuid="a459e1fb-6951-49da-84a1-6559bf77f636"/>
+				<textFieldExpression><![CDATA[$F{ID_VENTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="2" width="100" height="20" uuid="f639e6f0-2e42-4df3-8aa5-54a81b8dc41b"/>
+				<textFieldExpression><![CDATA[$F{CLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="2" width="118" height="20" uuid="75ff5c56-fee8-4eb6-84bc-c2a3a44fc7f1"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="2" width="106" height="20" uuid="6b2c806d-d354-4922-9972-76fa251a8dc4"/>
+				<textFieldExpression><![CDATA[$F{TIPOVENTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="2" width="100" height="20" uuid="2b558456-2ae7-4360-9916-0f3b946f2760"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="206" y="10" width="80" height="20" uuid="010cf8e6-455d-478a-8133-0b9300557aee"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="286" y="10" width="40" height="20" uuid="58496d99-dd80-45b2-912e-3d7206850e55"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

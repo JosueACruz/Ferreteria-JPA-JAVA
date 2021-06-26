@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ComprasPorFecha" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6eb9b987-704a-4a71-a966-23bf7f652535">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[Select c.ID_COMPRA as COMPRA, tc.NOMBRE as TIPO_COMPRA, p.NOMBRE as Proveedor, p.DIRECCION as Dir_Proveedor, (u.NOMBRE || ' ' || u.APELLIDO) as USUARIO, to_char(c.FECHACOMPRA, 'dd/mm/yyyy'), c.TOTAL from COMPRA c
+inner join PROVEEDOR p on p.ID_PROVEEDOR = c.ID_PROVEEDOR
+inner join USUARIO u on u.ID_USUARIO = c.ID_USUARIO
+inner join TIPOCOMPRA tc on tc.ID_TIPOCOMPRA = c.ID_TIPOCOMPRA
+where c.FECHACOMPRA = $P{fecha}]]>
+	</queryString>
+	<field name="COMPRA" class="java.math.BigDecimal"/>
+	<field name="TIPO_COMPRA" class="java.lang.String"/>
+	<field name="PROVEEDOR" class="java.lang.String"/>
+	<field name="DIR_PROVEEDOR" class="java.lang.String"/>
+	<field name="USUARIO" class="java.lang.String"/>
+	<field name="TO_CHAR(C.FECHACOMPRA,&apos;DD/MM/YYYY&apos;)" class="java.lang.String"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="388" height="88" uuid="8ec3e541-5f03-463a-b04e-bd6f1ca204d0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="38" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Compras]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="570" height="1" uuid="924885e4-a9e8-4716-a99b-1ce6f7fdd150"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1" width="156" height="39" uuid="111d89fc-403e-45b6-b26d-40f54f0c7ea8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ferreteria Jerusalen]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="441" y="1" width="129" height="37" uuid="445d5014-0b97-4b55-b648-f299bd4cae68"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="39" width="570" height="1" uuid="e638becf-1128-48f9-89b3-1b339c15a2b5"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="35" width="570" height="1" uuid="f0f731c2-3998-46ea-85bb-8614e8390d1a"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="0" width="65" height="20" uuid="df5e69d3-4735-4631-b941-a357cc6f77fe"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[COMPRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="0" width="77" height="20" uuid="cb22d036-04cf-48e4-8837-a2d2ff5c41fe"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TIPO_COMPRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="0" width="100" height="20" uuid="59758d6a-a723-4e59-98e5-c8d7c5db07bb"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PROVEEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="0" width="100" height="20" uuid="851fc4bd-4fc1-456a-8800-11a20949d8c6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DIR_PROVEEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="0" width="100" height="20" uuid="972eea25-02f8-494e-b58d-d87250c0cbbe"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[USUARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="0" width="71" height="20" uuid="639a2b67-ba0f-4ad8-b19b-afccb581dc09"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="515" y="0" width="56" height="20" uuid="21118e72-9443-46dd-8306-a88384b56989"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement x="571" y="0" width="1" height="33" uuid="325e5d84-76d0-47c8-bec6-b5fcae5a3e80"/>
+			</line>
+			<line>
+				<reportElement x="1" y="0" width="1" height="33" uuid="df59eecb-f233-449b-bd91-78077c0e6dad"/>
+			</line>
+			<line>
+				<reportElement x="2" y="33" width="570" height="1" uuid="f1094db4-6d6d-4eb2-8784-3b28d86484cd"/>
+			</line>
+			<textField>
+				<reportElement x="2" y="0" width="65" height="20" uuid="d550c7f0-8285-4805-8121-6b5feac26a2a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{COMPRA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="0" width="77" height="20" uuid="2e4b97ea-3683-4702-aa03-5334773e0400"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TIPO_COMPRA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="0" width="100" height="20" uuid="1372b1b1-7ba6-4f98-b6d2-173a3174abb6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PROVEEDOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="0" width="100" height="20" uuid="2fb0dde1-25dc-4ca7-b507-7c6253a0ba3c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DIR_PROVEEDOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="0" width="100" height="20" uuid="98c36356-830d-4008-b652-7475757a03d9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{USUARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="0" width="71" height="20" uuid="1fd4e12e-c487-4c2b-b90b-6404dd5b3e1a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TO_CHAR(C.FECHACOMPRA,'DD/MM/YYYY')}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="515" y="0" width="55" height="20" uuid="46f73c80-7514-4dac-948e-6a751872d508"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="224" y="7" width="80" height="20" uuid="2ff39723-bb9a-4e25-8853-46599ab11cbf"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="304" y="7" width="40" height="20" uuid="c003c9df-7c73-4822-a014-f0deb4581f95"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

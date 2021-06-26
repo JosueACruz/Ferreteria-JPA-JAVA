@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="ProjectJerusalenPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>Entidad.Proveedor</class>
+    <class>Entidad.Categoria</class>
+    <class>Entidad.Cliente</class>
+    <class>Entidad.Detalleventa</class>
+    <class>Entidad.Venta</class>
+    <class>Entidad.Producto</class>
+    <class>Entidad.Detallecompra</class>
+    <class>Entidad.Unidaddemedida</class>
+    <class>Entidad.Marca</class>
+    <class>Entidad.Tipocompra</class>
+    <class>Entidad.Tipousuario</class>
+    <class>Entidad.Compra</class>
+    <class>Entidad.Usuario</class>
+    <class>Entidad.Lotes</class>
+    <class>Entidad.Tipoventa</class>
+    <class>Entidad.Productoscondetalle</class>
+    <class>Entidad.Usuarioscondetalle</class>
+    <class>Entidad.Productoscondetalle2</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+      <property name="javax.persistence.jdbc.user" value="ferreteria"/>
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+      <property name="javax.persistence.jdbc.password" value="qwerty"/>
+    </properties>
+  </persistence-unit>
+</persistence>
